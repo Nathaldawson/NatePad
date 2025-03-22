@@ -1,0 +1,1474 @@
+/* Global Styles */
+:root {
+    --primary-color: #b004c0;
+    --primary-color-rgb: 13, 110, 253;
+    --secondary-color: #6c757d;
+    --background-color: #dddec7de;
+    --note-background: #ffffff;
+    --text-color: #333333;
+    --border-color: #e0e0e0;
+    --hover-color: #f2f2f2;
+    --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    --font-family: 'Roboto', Arial, sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+    --note-title-color: #000000;
+    --note-content-color: #333333;
+    --placeholder-color: #999999;
+    --link-color: #0a58ca;
+    --danger-color: #dc3545;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+}
+
+/* Dark Theme */
+.dark-theme {
+    --primary-color: #ffc107;
+    --primary-color-rgb: 58, 134, 255;
+    --secondary-color: #8d99ae;
+    --background-color: #1a1a1a;
+    --note-background: #2d2d2d;
+    --text-color: #e0e0e0;
+    --border-color: #404040;
+    --hover-color: #353535;
+    --shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    --note-title-color: #ffffff;
+    --note-content-color: #e0e0e0;
+    --placeholder-color: #808080;
+    --link-color: #5c9eff;
+}
+
+/* Special handling for white background notes in dark mode */
+.dark-theme .note[style*="background-color: rgb(255, 255, 255)"],
+.dark-theme .note[style*="background-color: #ffffff"],
+.dark-theme .note[style*="background-color: white"] {
+    color: #000000;
+}
+
+.dark-theme .note[style*="background-color: rgb(255, 255, 255)"] .note-title,
+.dark-theme .note[style*="background-color: #ffffff"] .note-title,
+.dark-theme .note[style*="background-color: white"] .note-title {
+    color: #000000;
+}
+
+.dark-theme .note[style*="background-color: rgb(255, 255, 255)"] .note-body,
+.dark-theme .note[style*="background-color: #ffffff"] .note-body,
+.dark-theme .note[style*="background-color: white"] .note-body {
+    color: #000000;
+}
+
+.dark-theme .note[style*="background-color: rgb(255, 255, 255)"] .timestamp,
+.dark-theme .note[style*="background-color: #ffffff"] .timestamp,
+.dark-theme .note[style*="background-color: white"] .timestamp {
+    color: #666666;
+}
+
+.dark-theme .note[style*="background-color: rgb(255, 255, 255)"] .note-actions button,
+.dark-theme .note[style*="background-color: #ffffff"] .note-actions button,
+.dark-theme .note[style*="background-color: white"] .note-actions button {
+    color: #333333;
+}
+
+.dark-theme .note[style*="background-color: rgb(255, 255, 255)"] .checklist-item,
+.dark-theme .note[style*="background-color: #ffffff"] .checklist-item,
+.dark-theme .note[style*="background-color: white"] .checklist-item {
+    color: #000000;
+}
+
+/* Also handle the note input area when it has white background */
+.dark-theme .note-input[style*="background-color: rgb(255, 255, 255)"],
+.dark-theme .note-input[style*="background-color: #ffffff"],
+.dark-theme .note-input[style*="background-color: white"] {
+    color: #000000;
+}
+
+.dark-theme .note-input[style*="background-color: rgb(255, 255, 255)"] #note-title,
+.dark-theme .note-input[style*="background-color: #ffffff"] #note-title,
+.dark-theme .note-input[style*="background-color: white"] #note-title {
+    color: #000000;
+}
+
+.dark-theme .note-input[style*="background-color: rgb(255, 255, 255)"] #note-content,
+.dark-theme .note-input[style*="background-color: #ffffff"] #note-content,
+.dark-theme .note-input[style*="background-color: white"] #note-content {
+    color: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: var(--font-weight-normal);
+    letter-spacing: 0.01em;
+}
+
+/* Improved text inputs */
+input[type="text"], 
+textarea, 
+[contenteditable="true"] {
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    font-weight: var(--font-weight-normal);
+}
+
+.dark-theme input[type="text"],
+.dark-theme textarea,
+.dark-theme [contenteditable="true"] {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Note title */
+.note-title {
+    color: var(--note-title-color);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.02em;
+}
+
+/* Note body text */
+.note-body {
+    color: var(--note-content-color);
+    line-height: 1.8;
+}
+
+/* Placeholder text */
+input::placeholder,
+textarea::placeholder,
+[contenteditable="true"]:empty:before {
+    color: var(--placeholder-color);
+    opacity: 1;
+}
+
+/* Improve links in dark mode */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.dark-theme a {
+    color: var(--link-color);
+}
+
+/* Improve contrast for note backgrounds in dark mode */
+.dark-theme .note {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Improved contrast for icons */
+.dark-theme button i {
+    color: #adb5bd;
+}
+
+.dark-theme button:hover i {
+    color: #ffffff;
+}
+
+/* Checklist item text */
+.checklist-item span {
+    color: var(--note-content-color);
+}
+
+.dark-theme .checklist-item.checked span {
+    opacity: 0.6;
+}
+
+/* Search input */
+.dark-theme .search-bar input {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--border-color);
+}
+
+/* Improved color picker in dark mode */
+.dark-theme .colors {
+    background-color: #404246;
+    border-color: #5f6368;
+}
+
+.dark-theme .color {
+    border-color: #5f6368;
+}
+
+/* Better contrast for secondary text */
+.dark-theme .timestamp,
+.dark-theme .share-info,
+.dark-theme .custom-color-picker label {
+    color: #b0b0b0;
+}
+
+/* Modal background for dark theme */
+.dark-theme .modal-content {
+    background-color: #353638;
+    border: 1px solid var(--border-color);
+}
+
+/* Note editing indicator in dark mode */
+.dark-theme .editing-indicator {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Highlight for active items in dark mode */
+.dark-theme nav li.active {
+    background-color: rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* Code for focus states in dark mode */
+.dark-theme input:focus,
+.dark-theme [contenteditable="true"]:focus {
+    outline-color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Layout */
+.app-container {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "nav main";
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--note-background);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo h1 {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.search-bar {
+    display: flex;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 20px;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+}
+
+.view-options {
+    display: flex;
+    gap: 10px;
+}
+
+.view-options button {
+    font-size: 18px;
+}
+
+.view-options button.active {
+    color: var(--primary-color);
+}
+
+/* Navigation */
+nav {
+    grid-area: nav;
+    background-color: var(--note-background);
+    padding: 20px 0;
+    border-right: 1px solid var(--border-color);
+    min-height: calc(100vh - 60px);
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav li {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+nav li:hover {
+    background-color: var(--hover-color);
+}
+
+nav li.active {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    color: var(--primary-color);
+    font-weight: bold;
+    border-radius: 0 20px 20px 0;
+}
+
+nav li i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Main Content */
+main {
+    grid-area: main;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Create Note */
+.create-note {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    background-color: var(--note-background);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.note-input {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.note-input input, 
+.note-input [contenteditable] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.note-input input {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.note-input [contenteditable]:empty:before {
+    content: attr(placeholder);
+    color: var(--secondary-color);
+}
+
+.note-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+}
+
+.note-toolbar button {
+    color: var(--secondary-color);
+    padding: 5px;
+    font-size: 16px;
+}
+
+.note-toolbar button:hover {
+    color: var(--primary-color);
+}
+
+#note-save {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+}
+
+/* Note Grid/List View */
+.notes-container {
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.grid-view {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.list-view {
+    grid-template-columns: 1fr;
+}
+
+.note {
+    background-color: var(--note-background);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 15px;
+    position: relative;
+    transition: box-shadow 0.3s;
+    border: 1px solid var(--border-color);
+}
+
+.note:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.note.pinned {
+    border-color: var(--primary-color);
+}
+
+.note.pinned:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 20px;
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent var(--primary-color) transparent;
+    transform: rotate(180deg);
+}
+
+.note-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.note-body {
+    font-size: 14px;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.note-body img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--secondary-color);
+}
+
+.note-actions {
+    display: flex;
+    gap: 5px;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+}
+
+.note:hover .note-actions {
+    opacity: 1;
+}
+
+.note-actions button {
+    padding: 3px;
+    font-size: 14px;
+}
+
+/* Note in edit mode */
+.note-input.editing {
+    background-color: inherit;
+    transition: background-color 0.3s ease;
+}
+
+.editing-indicator {
+    display: none;
+    padding: 5px 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+}
+
+.note-input.editing .editing-indicator {
+    display: block;
+}
+
+/* Improved Checklist styling */
+.checklist {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px 0;
+    position: relative;
+}
+
+.checklist-item input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.checklist-item input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checklist-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checklist-item.checked span {
+    text-decoration: line-through;
+    opacity: 0.7;
+    color: var(--secondary-color);
+}
+
+.checklist-item span {
+    flex-grow: 1;
+    padding: 2px 5px;
+    min-height: 24px;
+    border-radius: 3px;
+}
+
+.checklist-item span[contenteditable="true"]:focus {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    outline: none;
+}
+
+/* Color Palette */
+.color-palette {
+    position: relative;
+}
+
+.colors {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    display: none;
+    flex-wrap: wrap;
+    gap: 5px;
+    background-color: var(--note-background);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+    width: 180px;
+    z-index: 5;
+}
+
+.colors.visible {
+    display: flex;
+}
+
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+}
+
+.color:hover {
+    transform: scale(1.1);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background-color: var(--note-background);
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal h2 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.label-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.label-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.label-item:hover {
+    background-color: var(--hover-color);
+}
+
+.add-label-input {
+    display: flex;
+    margin-top: 10px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+}
+
+.add-label-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    padding: 8px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 4px;
+}
+
+/* Mobile Specific Styles */
+.mobile-only {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .app-container {
+        grid-template-areas:
+            "header"
+            "main";
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        position: fixed;
+        left: -250px;
+        top: 60px;
+        width: 250px;
+        height: calc(100% - 60px);
+        z-index: 20;
+        transition: left 0.3s;
+        box-shadow: var(--shadow);
+    }
+
+    nav.open {
+        left: 0;
+    }
+
+    header {
+        padding: 10px;
+        position: sticky;
+        top: 0;
+        z-index: 30;
+    }
+
+    .search-bar {
+        margin: 0 10px;
+        max-width: none;
+    }
+
+    .logo h1 {
+        font-size: 20px;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+
+    #mobile-menu {
+        order: -1;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+
+    .view-options {
+        gap: 5px;
+    }
+
+    .view-options button {
+        padding: 5px;
+    }
+
+    .create-note {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .grid-view {
+        grid-template-columns: 1fr;
+    }
+
+    /* Modal adjustments for mobile */
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    /* Overlay when mobile menu is open */
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 60px);
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 15;
+    }
+
+    .menu-overlay.visible {
+        display: block;
+    }
+
+    /* Make checklist items easier to tap on mobile */
+    .checklist-item {
+        padding: 8px 0;
+    }
+
+    .checklist-item input[type="checkbox"] {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .checklist-item input[type="checkbox"]:checked::after {
+        font-size: 16px;
+    }
+
+    /* Adjust color palette position on mobile */
+    .colors {
+        right: 0;
+        left: auto;
+    }
+}
+
+/* Custom Color Picker */
+.custom-color-picker {
+    width: 100%;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.custom-color-picker input[type="color"] {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+}
+
+.custom-color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.custom-color-picker input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+.custom-color-picker label {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--secondary-color);
+}
+
+/* Mass Actions */
+.mass-actions {
+    margin-top: 20px;
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: none; /* Hidden by default */
+}
+
+.mass-actions button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    text-align: left;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.mass-actions button:hover {
+    background-color: var(--hover-color);
+}
+
+.mass-actions button i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+#delete-all-btn {
+    color: #f44336;
+}
+
+#recover-all-btn {
+    color: var(--primary-color);
+}
+
+/* Show mass action buttons when in trash view */
+body[data-view="trash"] .mass-actions {
+    display: block;
+}
+
+/* Also show them directly when the current filter is trash */
+body:not([data-view]) .mass-actions {
+    display: block;
+}
+
+/* Share Modal and Options */
+.share-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.share-option {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.share-option button {
+    display: flex;
+    align-items: center;
+    background-color: var(--hover-color);
+    border-radius: 4px;
+    padding: 10px 15px;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.share-option button:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+.share-option button i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.share-info {
+    font-size: 12px;
+    color: var(--secondary-color);
+    padding-left: 5px;
+}
+
+/* Reminder styling for checklist notes */
+.reminder-badge {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-right: 8px;
+}
+
+.note.has-reminder .note-title::before {
+    content: '⏰';
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+/* Note with reminder indicator while editing */
+.note-input.has-reminder {
+    position: relative;
+}
+
+.note-input.has-reminder::before {
+    content: '⏰ Will go to Reminders';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+}
+
+/* Temporary notification animation */
+.temporary-notification {
+    animation: fadeInOut 3.5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, 20px); }
+    10% { opacity: 1; transform: translate(-50%, 0); }
+    80% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, 0); }
+}
+
+/* Undo/Redo buttons */
+.note-edit-tools {
+    display: flex;
+    gap: 5px;
+    margin-right: 10px;
+    border-right: 1px solid var(--border-color);
+    padding-right: 10px;
+}
+
+.note-edit-tools button {
+    color: var(--secondary-color);
+    padding: 5px;
+    font-size: 14px;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.note-edit-tools button:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+.note-edit-tools button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.note-edit-tools button:disabled:hover {
+    background-color: transparent;
+    color: var(--secondary-color);
+}
+
+/* Auto-save status */
+.auto-save-status {
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+#auto-save-indicator {
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s;
+}
+
+#auto-save-indicator.saving {
+    color: var(--secondary-color);
+}
+
+#auto-save-indicator.saved {
+    color: #28a745;
+}
+
+#auto-save-indicator.failed {
+    color: #dc3545;
+}
+
+#auto-save-indicator.saving::before {
+    content: 'Saving...';
+}
+
+#auto-save-indicator.saved::before {
+    content: 'Saved';
+}
+
+#auto-save-indicator.failed::before {
+    content: 'Failed to save';
+}
+
+/* Auto-save timestamp display */
+#auto-save-indicator::after {
+    content: attr(data-timestamp);
+    position: absolute;
+    left: 0;
+    top: 18px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0.7;
+}
+
+/* Add animation for auto-save */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+#auto-save-indicator.saving {
+    animation: pulse 1.5s infinite;
+}
+
+/* Pull to refresh */
+#pull-to-refresh-indicator {
+    display: none;
+    text-align: center;
+    padding: 10px;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+}
+
+#pull-to-refresh-indicator i {
+    margin-right: 5px;
+    animation: spin 1.5s infinite linear;
+    display: inline-block;
+}
+
+#pull-to-refresh-indicator.visible {
+    display: block;
+}
+
+#pull-to-refresh-indicator.pulling {
+    transform: translateY(20px);
+}
+
+#pull-to-refresh-indicator.refreshing i {
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Swipe actions for notes */
+.note {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.swipe-indicators {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.swipe-left-action,
+.swipe-right-action {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.swipe-left-action {
+    right: 0;
+    background-color: var(--danger-color);
+}
+
+.swipe-right-action {
+    left: 0;
+    background-color: var(--primary-color);
+}
+
+.note.swiping-left .swipe-left-action,
+.note.swiping-right .swipe-right-action {
+    opacity: 1;
+}
+
+.note.swiping-left {
+    transform: translateX(-80px);
+}
+
+.note.swiping-right {
+    transform: translateX(80px);
+}
+
+/* Notification badge */
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--danger-color);
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.notification-count:empty {
+    display: none;
+}
+
+/* Notification list */
+.notification-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    display: flex;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.notification-icon {
+    margin-right: 15px;
+    font-size: 18px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 4px;
+}
+
+.notification-message {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: var(--text-color);
+}
+
+.notification-time {
+    font-size: 12px;
+    color: var(--secondary-color);
+}
+
+.dismiss-notification {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    align-self: flex-start;
+}
+
+.dismiss-notification:hover {
+    opacity: 1;
+}
+
+/* Toast notifications */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 320px;
+}
+
+.toast {
+    background-color: var(--note-background);
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    animation: toast-in 0.3s ease, toast-out 0.3s ease 4.7s forwards;
+    max-width: 100%;
+    border-left: 4px solid var(--primary-color);
+}
+
+.toast.success {
+    border-left-color: var(--success-color);
+}
+
+.toast.error {
+    border-left-color: var(--danger-color);
+}
+
+.toast.warning {
+    border-left-color: var(--warning-color);
+}
+
+.toast.info {
+    border-left-color: var(--info-color);
+}
+
+.toast-icon {
+    margin-right: 12px;
+    font-size: 16px;
+}
+
+.toast.success .toast-icon {
+    color: var(--success-color);
+}
+
+.toast.error .toast-icon {
+    color: var(--danger-color);
+}
+
+.toast.warning .toast-icon {
+    color: var(--warning-color);
+}
+
+.toast.info .toast-icon {
+    color: var(--info-color);
+}
+
+.toast-content {
+    flex: 1;
+    font-size: 14px;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+@keyframes toast-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toast-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* File attachments */
+.file-attachment {
+    margin: 10px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 10px;
+    background-color: rgba(var(--primary-color-rgb), 0.05);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.file-icon {
+    font-size: 20px;
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.file-info {
+    flex: 1;
+}
+
+.file-name {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 2px;
+    word-break: break-all;
+}
+
+.file-size {
+    font-size: 12px;
+    color: var(--secondary-color);
+}
+
+.file-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.file-preview-btn, 
+.file-delete-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.file-preview-btn {
+    color: var(--primary-color);
+}
+
+.file-delete-btn {
+    color: var(--danger-color);
+}
+
+/* File preview modal */
+.file-preview-container {
+    width: 100%;
+    min-height: 300px;
+    max-height: 60vh;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.file-preview-container iframe,
+.file-preview-container img {
+    max-width: 100%;
+    max-height: 60vh;
+}
+
+.file-preview-container .pdf-preview {
+    width: 100%;
+    height: 60vh;
+    border: none;
+}
+
+.file-preview-container .file-info-fallback {
+    text-align: center;
+    padding: 20px;
+}
+
+.file-preview-container .file-info-fallback i {
+    font-size: 48px;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+/* Dark mode adjustments for new features */
+.dark-theme #pull-to-refresh-indicator {
+    color: #adb5bd;
+}
+
+.dark-theme .toast {
+    background-color: #2d2e30;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .file-attachment {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    border-color: var(--border-color);
+} 

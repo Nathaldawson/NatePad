@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NatePad</title>
+    <meta name="description" content="A local note-taking application">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <h1>NatePad</h1>
+            </div>
+            <button id="mobile-menu" class="mobile-only"><i class="fas fa-bars"></i></button>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search notes...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="view-options">
+                <button id="grid-view" class="active"><i class="fas fa-th"></i></button>
+                <button id="list-view"><i class="fas fa-list"></i></button>
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <button id="notifications-toggle"><i class="fas fa-bell"></i><span id="notification-badge" class="notification-count"></span></button>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li class="active"><i class="fas fa-sticky-note"></i> Notes</li>
+                <li><i class="fas fa-tasks"></i> Reminders</li>
+                <li><i class="fas fa-share-alt"></i> Shared</li>
+                <li><i class="fas fa-trash"></i> Trash</li>
+            </ul>
+            <div class="mass-actions">
+                <button id="delete-all-btn"><i class="fas fa-trash-alt"></i> Empty Trash</button>
+                <button id="recover-all-btn"><i class="fas fa-redo"></i> Recover All</button>
+            </div>
+        </nav>
+
+        <main>
+            <div id="pull-to-refresh-indicator">
+                <i class="fas fa-sync-alt"></i>
+                <span>Pull to refresh</span>
+            </div>
+            
+            <div class="create-note">
+                <div class="note-input">
+                    <span class="editing-indicator">Editing Note</span>
+                    <input type="text" id="note-title" placeholder="Title">
+                    <div id="note-content" contenteditable="true" placeholder="Take a note..."></div>
+                    <div class="note-toolbar">
+                        <div class="note-edit-tools">
+                            <button id="undo-btn" title="Undo"><i class="fas fa-undo"></i></button>
+                            <button id="redo-btn" title="Redo"><i class="fas fa-redo"></i></button>
+                        </div>
+                        <button id="add-checklist"><i class="fas fa-check-square"></i></button>
+                        <button id="add-image"><i class="fas fa-image"></i></button>
+                        <button id="add-file"><i class="fas fa-paperclip"></i></button>
+                        <input type="file" id="image-upload" accept="image/*" hidden>
+                        <input type="file" id="file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar" hidden>
+                        <div class="color-palette">
+                            <button id="color-picker"><i class="fas fa-palette"></i></button>
+                            <div class="colors">
+                                <span class="color" style="background-color: #ffffff;"></span>
+                                <span class="color" style="background-color: #f28b82;"></span>
+                                <span class="color" style="background-color: #fbbc04;"></span>
+                                <span class="color" style="background-color: #fff475;"></span>
+                                <span class="color" style="background-color: #ccff90;"></span>
+                                <span class="color" style="background-color: #a7ffeb;"></span>
+                                <span class="color" style="background-color: #cbf0f8;"></span>
+                                <span class="color" style="background-color: #aecbfa;"></span>
+                                <span class="color" style="background-color: #d7aefb;"></span>
+                                <span class="color" style="background-color: #fdcfe8;"></span>
+                                <div class="custom-color-picker">
+                                    <input type="color" id="custom-color-input" value="#ffffff">
+                                    <label for="custom-color-input">Custom</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="share-note-btn"><i class="fas fa-share-alt"></i></button>
+                        <button id="note-save">Save</button>
+                        <div class="auto-save-status">
+                            <span id="auto-save-indicator"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes-container grid-view" id="notes-container">
+                <!-- Notes will be dynamically added here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Templates -->
+    <template id="note-template">
+        <div class="note" draggable="true">
+            <h3 class="note-title"></h3>
+            <div class="note-body"></div>
+            <div class="note-footer">
+                <span class="timestamp"></span>
+                <div class="note-actions">
+                    <button class="pin-note"><i class="fas fa-thumbtack"></i></button>
+                    <button class="share-note"><i class="fas fa-share-alt"></i></button>
+                    <button class="delete-note"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="swipe-indicators">
+                <div class="swipe-left-action"><i class="fas fa-trash"></i></div>
+                <div class="swipe-right-action"><i class="fas fa-share-alt"></i></div>
+            </div>
+        </div>
+    </template>
+
+    <div class="modal" id="share-modal">
+        <div class="modal-content">
+            <h2>Share Note</h2>
+            <div class="share-options">
+                <div class="share-option">
+                    <button id="copy-link"><i class="fas fa-link"></i> Copy Link</button>
+                    <span class="share-info">Creates a shareable URL for this note</span>
+                </div>
+                <div class="share-option">
+                    <button id="export-note"><i class="fas fa-file-export"></i> Export as Text</button>
+                    <span class="share-info">Download note as a text file</span>
+                </div>
+                <div class="share-option">
+                    <button id="export-pdf"><i class="fas fa-file-pdf"></i> Export as PDF</button>
+                    <span class="share-info">Download note as a PDF file</span>
+                </div>
+                <div class="share-option">
+                    <button id="email-note"><i class="fas fa-envelope"></i> Email Note</button>
+                    <span class="share-info">Send note via email</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="close-share-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="notification-modal">
+        <div class="modal-content">
+            <h2>Notifications</h2>
+            <div class="notification-list" id="notification-list">
+                <!-- Notifications will be added here dynamically -->
+            </div>
+            <div class="modal-actions">
+                <button id="clear-all-notifications">Clear All</button>
+                <button id="close-notification-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="file-preview-modal">
+        <div class="modal-content">
+            <h2>File Preview</h2>
+            <div class="file-preview-container" id="file-preview-container">
+                <!-- File preview will be rendered here -->
+            </div>
+            <div class="modal-actions">
+                <button id="download-file">Download</button>
+                <button id="close-file-preview">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <template id="notification-template">
+        <div class="notification-item">
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="notification-content">
+                <h4 class="notification-title"></h4>
+                <p class="notification-message"></p>
+                <span class="notification-time"></span>
+            </div>
+            <button class="dismiss-notification"><i class="fas fa-times"></i></button>
+        </div>
+    </template>
+
+    <div class="toast-container" id="toast-container">
+        <!-- Toast notifications will be added here -->
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html> 

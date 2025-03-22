@@ -1,0 +1,16 @@
+{
+  "name": "natepad-web",
+  "version": "1.0.0",
+  "description": "A simple, local note-taking web application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npx http-server -o"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "author": "",
+  "license": "MIT"
+} 
